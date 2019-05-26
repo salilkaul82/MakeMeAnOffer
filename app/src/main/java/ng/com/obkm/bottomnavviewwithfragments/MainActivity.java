@@ -1,11 +1,15 @@
 package ng.com.obkm.bottomnavviewwithfragments;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -15,10 +19,8 @@ import ng.com.obkm.bottomnavviewwithfragments.home.HomeFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-
     final Fragment fragment1 = new HomeFragment();
-    final Fragment fragment2 = new DashboardFragment();
-    final Fragment fragment3 = new NotificationsFragment();
+    final Fragment fragment2 = new NotificationsFragment();
     final FragmentManager fm = getSupportFragmentManager();
     Fragment active = fragment1;
 
@@ -30,11 +32,16 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //Request SMS Read access if not provided already
+        int sms = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS);
+        if (sms != PackageManager.PERMISSION_GRANTED)
+        {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_SMS}, 2);
+        }
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        fm.beginTransaction().add(R.id.main_container, fragment3, "3").hide(fragment3).commit();
         fm.beginTransaction().add(R.id.main_container, fragment2, "2").hide(fragment2).commit();
         fm.beginTransaction().add(R.id.main_container,fragment1, "1").commit();
 
@@ -52,14 +59,9 @@ public class MainActivity extends AppCompatActivity {
                     active = fragment1;
                     return true;
 
-                case R.id.navigation_dashboard:
+                case R.id.navigation_notifications:
                     fm.beginTransaction().hide(active).show(fragment2).commit();
                     active = fragment2;
-                    return true;
-
-                case R.id.navigation_notifications:
-                    fm.beginTransaction().hide(active).show(fragment3).commit();
-                    active = fragment3;
                     return true;
             }
             return false;
@@ -72,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -83,6 +86,5 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
 
 }

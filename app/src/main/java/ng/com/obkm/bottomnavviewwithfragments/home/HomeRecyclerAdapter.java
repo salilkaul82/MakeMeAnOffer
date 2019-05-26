@@ -29,13 +29,12 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
 
     @Override
     public void onBindViewHolder(@NonNull HomeRecyclerAdapter.ViewHolder holder, int position) {
-        int id = home_list.get(position).getId();
-        String desc = home_list.get(position).getDesc();
+        String message = home_list.get(position).getMessage();
+        String sender = home_list.get(position).getSenderName();
 
-        holder.desc.setText(desc);
-        holder.image.setImageResource(id);
-
-
+        holder.message.setText(message);
+        holder.sender.setText(sender);
+        //holder.image.setImageResource(id);
     }
 
     @Override
@@ -46,13 +45,13 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private View mView;
-        private TextView desc;
-        private ImageView image;
+        private TextView message;
+        private TextView sender;
         public ViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
-            desc = mView.findViewById(R.id.item_desc);
-            image = mView.findViewById(R.id.item_image);
+            message = mView.findViewById(R.id.sms_message);
+            sender = mView.findViewById(R.id.sms_sender);
         }
     }
 }

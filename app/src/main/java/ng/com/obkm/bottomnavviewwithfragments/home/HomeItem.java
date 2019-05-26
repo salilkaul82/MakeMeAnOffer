@@ -1,31 +1,33 @@
 package ng.com.obkm.bottomnavviewwithfragments.home;
 
 public class HomeItem {
-    public String desc;
-    public int id;
+
+    public String senderName;
+    public String message;
 
     public HomeItem(){
 
     }
 
-    public HomeItem(String desc, int id) {
-        this.desc = desc;
-        this.id = id;
+    public HomeItem(String senderName, String message) {
+        this.senderName = senderName;
+        this.message = message;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getSenderName() {
+        return senderName;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setSenderName(String senderName) {
+        this.senderName = senderName;
     }
 
-    public int getId() {
-        return id;
+    public String getMessage() {
+        return message;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setMessage(String message) {
+        this.message = message;
     }
+
 }

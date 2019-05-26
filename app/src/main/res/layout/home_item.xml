@@ -1,28 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
-    <LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/sms_sender"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:textSize="16sp"/>
 
-        <ImageView
-            android:id="@+id/item_image"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginTop="8dp"
-            android:background="@color/colorPrimary"/>
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/sms_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:id="@+id/item_desc"
-            android:layout_marginBottom="8dp"
-            android:background="@color/colorPrimary"/>
-    </LinearLayout>
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/sms_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"/>
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>
