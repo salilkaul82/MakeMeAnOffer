@@ -66,12 +66,12 @@ public class NotificationsFragment extends Fragment {
 
         ArrayList<OffersData> offersList = new ArrayList<OffersData>();
 
-            offersList.add(new OffersData("Big Basket", "10%", "HSBCMAY","bigbasket","https://www.bigbasket.com"));
-            offersList.add(new OffersData("Flipkart", "10%", "HSBCFLIP","flipkart","https://www.flipkart.com"));
-            offersList.add(new OffersData("Croma", "15%", "HSBCC","croma","https://www.croma.in"));
-            offersList.add(new OffersData("GoIbibo", "20%", "GOHSBC","goibibo","https://www.goibibo.com"));
-            offersList.add(new OffersData("Cleartrip", "15%", "CTHSBCFRIDAY","cleartrip","https://www.cleartrip.com"));
-            offersList.add(new OffersData("ShoppersStop", "10%", "N/A","shoppersstop","https://www.shoppersstop.com"));
+            offersList.add(new OffersData("Big Basket", "10%", "HSBCMAY","bigbasket","https://www.hsbc.co.in/offers/big-basket/"));
+            offersList.add(new OffersData("Flipkart", "10%", "HSBCFLIP","flipkart","https://www.hsbc.co.in/offers/flipkart/"));
+            //offersList.add(new OffersData("Croma", "15%", "HSBCC","croma","https://www.croma.in"));
+            offersList.add(new OffersData("GoIbibo", "20%", "GOHSBC","goibibo","https://www.hsbc.co.in/credit-cards/offers/goibibo/"));
+            offersList.add(new OffersData("Cleartrip", "15%", "CTHSBCFRIDAY","cleartrip","https://www.hsbc.co.in/credit-cards/offers/cleartrip-friday/"));
+            //offersList.add(new OffersData("ShoppersStop", "10%", "N/A","shoppersstop","https://www.shoppersstop.com"));
 
             CustomAdapter customAdapter = new CustomAdapter(getContext(), offersList);
             recyclerView.setAdapter(customAdapter); // set the Adapter to RecyclerView
