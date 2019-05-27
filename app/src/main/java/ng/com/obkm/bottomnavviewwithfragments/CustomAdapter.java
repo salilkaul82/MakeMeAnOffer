@@ -26,6 +26,7 @@ public class CustomAdapter extends RecyclerView.Adapter {
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // inflate the item Layout
+        //** Note that the notifications fragment is bound to recycler view here**//
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_notifications, parent, false);
         // set the view's size, margins, paddings and layout parameters
         MyViewHolder vh = new MyViewHolder(v); // pass the view to View Holder
