@@ -26,7 +26,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:textSize="16sp"/>
+            android:textStyle="italic"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp"/>
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/sms_date"
@@ -39,6 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            android:textStyle="bold"
             android:textSize="16sp"/>
 
     </RelativeLayout>

@@ -15,6 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -30,6 +31,8 @@ public class HomeFragment extends Fragment {
     private List<HomeItem> rv_list;
     private RecyclerView recyclerView;
     private List<HomeItem> smsList = new ArrayList();
+    private float totalMonthlySavings=0.0F;
+    private TextView textView;
 
     //OkHttpClient creates connection pool between client and server
 
@@ -44,8 +47,12 @@ public class HomeFragment extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.home_rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         HomeRecyclerAdapter mAdapter = new HomeRecyclerAdapter(getSmsMessages());
+        mAdapter.setTotalMonthlySavings(totalMonthlySavings);
         recyclerView.setAdapter(mAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        textView = (TextView) view.findViewById(R.id.footer_text);
+        textView.setText("Savings This Month: "+ totalMonthlySavings);
 
         return view;
     }

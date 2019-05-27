@@ -15,6 +15,12 @@ import ng.com.obkm.bottomnavviewwithfragments.R;
 public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapter.ViewHolder> {
     public List<HomeItem> home_list;
 
+    public void setTotalMonthlySavings(float totalMonthlySavings) {
+        this.totalMonthlySavings = totalMonthlySavings;
+    }
+
+    public float totalMonthlySavings=0.0F;
+
     public HomeRecyclerAdapter(List<HomeItem> list) {
         this.home_list = list;
     }
