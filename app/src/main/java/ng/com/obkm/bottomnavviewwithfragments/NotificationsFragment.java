@@ -1,6 +1,11 @@
 package ng.com.obkm.bottomnavviewwithfragments;
 
 
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.ViewModel;
+import android.arch.lifecycle.ViewModelProvider;
+import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -26,6 +31,7 @@ public class NotificationsFragment extends Fragment {
     private RecyclerView recyclerView;
     private ArrayList<OffersData>offersList;
     private static final String offersURL = "https://s3.amazonaws.com/makemeanoffer/OffersJSON.txt";
+    private SharedViewModel viewModel;
 
     // ArrayList for person names
     //ArrayList<String> personNames = new ArrayList<>(Arrays.asList("Person 1", "Person 2", "Person 3", "Person 4", "Person 5", "Person 6", "Person 7","Person 8", "Person 9", "Person 10", "Person 11", "Person 12", "Person 13", "Person 14"));
@@ -47,6 +53,10 @@ public class NotificationsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        Bundle bundle = new Bundle();
+        bundle.putInt("test", 10);
+        this.setArguments(bundle);
+
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.home_rv);
 
@@ -58,9 +68,17 @@ public class NotificationsFragment extends Fragment {
         CustomAdapter customAdapter = new CustomAdapter(getContext(), getOffersList(offersURL,1));
         recyclerView.setAdapter(customAdapter); // set the Adapter to RecyclerView
 
+        //viewModel.setText("Offerlist injected");
+
         return view;
 
     }
+
+//    @Override
+    /*public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        viewModel = ViewModelProviders
+    }*/
 
     private ArrayList<OffersData> getOffersList(String URL, int type){
 
@@ -77,6 +95,20 @@ public class NotificationsFragment extends Fragment {
             recyclerView.setAdapter(customAdapter); // set the Adapter to RecyclerView
 
         return offersList;
+    }
+
+    public class SharedViewModel extends ViewModel {
+        //private final MutableLiveData<Item> selected = new MutableLiveData<Item>();
+        private MutableLiveData<CharSequence> text = new MutableLiveData<>();
+
+        public void setText(CharSequence input){
+            text.setValue(input);
+        }
+
+        public LiveData<CharSequence> getText(){
+            return text;
+        }
+
     }
 
 }

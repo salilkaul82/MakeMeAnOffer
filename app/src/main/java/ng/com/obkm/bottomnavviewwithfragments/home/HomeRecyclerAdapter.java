@@ -35,11 +35,14 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
 
     @Override
     public void onBindViewHolder(@NonNull HomeRecyclerAdapter.ViewHolder holder, int position) {
+
         String message = home_list.get(position).getMessage();
         String sender = home_list.get(position).getSenderName();
+        String date = home_list.get(position).getDate();
 
         holder.message.setText(message);
         holder.sender.setText(sender);
+        holder.date.setText(date);
         //holder.image.setImageResource(id);
     }
 
@@ -53,11 +56,13 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         private View mView;
         private TextView message;
         private TextView sender;
+        private TextView date;
         public ViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
             message = mView.findViewById(R.id.sms_message);
             sender = mView.findViewById(R.id.sms_sender);
+            date = mView.findViewById(R.id.sms_date);
         }
     }
 }

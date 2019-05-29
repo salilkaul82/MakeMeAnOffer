@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -41,6 +43,11 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
@@ -52,7 +59,8 @@ public class HomeFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         textView = (TextView) view.findViewById(R.id.footer_text);
-        textView.setText("Savings This Month: "+ totalMonthlySavings);
+
+        //textView.setText("Savings This Month: "+ totalMonthlySavings);
 
         return view;
     }
@@ -72,17 +80,29 @@ public class HomeFragment extends Fragment {
             do {
                 //val senderName = cursor.getString(nameID)
                 String message = cursor.getString(messageID);
-                String dateString = cursor.getString(dateID);
+                long date = cursor.getLong(dateID);
+                String formattedDate = new SimpleDateFormat("dd MMMM yy").format(date);
+                HomeItem homeItem = new HomeItem();
 
                 //First filter only spends from the sms list
                 //TODO: This logic needs improvement as we need to ideally read a configurable list of texts
                     if(message.contains("spent Rs")){
-                        rv_list.add(new HomeItem(getMerchantName(message,2),getSpentAmount(message,2)));
+                        homeItem.setSenderName(getMerchantName(message,2));
+                        homeItem.setMessage(getSpentAmount(message,2));
+                        homeItem.setDate(formattedDate);
+                        rv_list.add(homeItem);
                     }else if(message.contains("purchase for")){
-                        rv_list.add(new HomeItem(getMerchantName(message,1),getSpentAmount(message,3)));
+                        homeItem.setSenderName(getMerchantName(message,1));
+                        homeItem.setMessage(getSpentAmount(message,3));
+                        homeItem.setDate(formattedDate);
+                        rv_list.add(homeItem);
                     } else if(message.contains("spent on")){
-                        rv_list.add(new HomeItem(getMerchantName(message,1),getSpentAmount(message,1)));
+                        homeItem.setSenderName(getMerchantName(message,1));
+                        homeItem.setMessage(getSpentAmount(message,1));
+                        homeItem.setDate(formattedDate);
+                        rv_list.add(homeItem);
                     }
+
             }while (cursor.moveToNext());
         }
         cursor.close();
@@ -117,6 +137,7 @@ public class HomeFragment extends Fragment {
 
         int startIndex=0;
         int endIndex=0;
+        String rupee = getResources().getString(R.string.Rs);
 
         try{
             if(type ==1){
@@ -125,7 +146,7 @@ public class HomeFragment extends Fragment {
                 endIndex = startIndex + endIndex;
 
             }if(type==2){
-                startIndex = message.indexOf("spent Rs.") + 10;
+                startIndex = message.indexOf("spent Rs") + 9;
                 endIndex = message.substring(startIndex).indexOf("on");
                 endIndex = startIndex + endIndex;
 
@@ -137,7 +158,7 @@ public class HomeFragment extends Fragment {
         }catch(StringIndexOutOfBoundsException strindexe){
             System.out.println(strindexe);
         }
-        return message.substring(startIndex, endIndex);
+        return rupee + " " + message.substring(startIndex, endIndex);
 
     }
 
