@@ -32,7 +32,7 @@
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/sms_date"
-            android:layout_width="170sp"
+            android:layout_width="165sp"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/sms_sender"
             android:layout_alignParentTop="true"
@@ -59,7 +59,7 @@
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/savings"
-            android:layout_width="150sp"
+            android:layout_width="160sp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"

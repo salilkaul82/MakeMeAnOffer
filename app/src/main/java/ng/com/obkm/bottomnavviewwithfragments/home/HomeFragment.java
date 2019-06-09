@@ -87,7 +87,7 @@ public class HomeFragment extends Fragment {
                 //val senderName = cursor.getString(nameID)
                 String message = cursor.getString(messageID);
                 long date = cursor.getLong(dateID);
-                String formattedDate = new SimpleDateFormat("dd MMMM yy").format(date);
+                String formattedDate = new SimpleDateFormat("dd MMM yy").format(date);
                 HomeItem homeItem = new HomeItem();
 
                 //First filter only spends from the sms list
