@@ -1,4 +1,4 @@
-package ng.com.obkm.bottomnavviewwithfragments;
+package ng.salil.obkm.bottomnavviewwithfragments;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

@@ -23,7 +23,7 @@
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/sms_sender"
-            android:layout_width="250sp"
+            android:layout_width="230sp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:textColor="@color/colorPrimary"
@@ -32,20 +32,40 @@
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/sms_date"
-            android:layout_width="100sp"
+            android:layout_width="170sp"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/sms_sender"
-            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:textSize="16sp" />
 
         <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/sms_message"
-            android:layout_width="match_parent"
+            android:id="@+id/currency"
+            android:layout_width="10sp"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            android:text="@string/Rs"
+            android:textStyle="bold"
+            android:textSize="15sp"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/sms_message"
+            android:layout_width="250sp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@id/currency"
             android:textStyle="bold"
             android:textSize="16sp"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/savings"
+            android:layout_width="150sp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:textColor="#E91E63"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
     </RelativeLayout>
 

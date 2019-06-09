@@ -1,12 +1,20 @@
 package ng.com.obkm.bottomnavviewwithfragments.home;
 
-import java.util.Calendar;
-
 public class HomeItem {
 
     private String senderName;
     private String message;
     private String date;
+
+    public String getSavings() {
+        return savings;
+    }
+
+    public void setSavings(String savings) {
+        this.savings = savings;
+    }
+
+    private String savings;
 
     public HomeItem(){
 

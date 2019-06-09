@@ -4,9 +4,9 @@ package ng.com.obkm.bottomnavviewwithfragments;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProvider;
-import android.content.Intent;
-import android.media.Image;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,12 +15,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
+import okhttp3.Callback;
+import okhttp3.Request;
 
 
 /**
@@ -32,21 +31,62 @@ public class NotificationsFragment extends Fragment {
     private ArrayList<OffersData>offersList;
     private static final String offersURL = "https://s3.amazonaws.com/makemeanoffer/OffersJSON.txt";
     private SharedViewModel viewModel;
-
-    // ArrayList for person names
-    //ArrayList<String> personNames = new ArrayList<>(Arrays.asList("Person 1", "Person 2", "Person 3", "Person 4", "Person 5", "Person 6", "Person 7","Person 8", "Person 9", "Person 10", "Person 11", "Person 12", "Person 13", "Person 14"));
-    //ArrayList<Integer> personImages = new ArrayList<>(Arrays.asList(R.drawable.album1, R.drawable.album2, R.drawable.album3, R.drawable.album4, R.drawable.album5, R.drawable.album6, R.drawable.album7,R.drawable.album8, R.drawable.album9, R.drawable.album10, R.drawable.album11, R.drawable.album1, R.drawable.album2, R.drawable.album3));
-
+    private ExampleDBHelper dbHelper ;
+    private SQLiteDatabase db;
+    SendMessage SM;
 
     public NotificationsFragment() {
         // Required empty public constructor
     }
 
+    interface SendMessage {
+        void sendData(ArrayList<OffersData> offersData);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        try {
+            SM = (SendMessage) getActivity();
+        } catch (ClassCastException e) {
+            throw new ClassCastException("Error in retrieving data. Please try again");
+        }
+    }
+
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //initializeList();
-        getActivity().setTitle("Make Me An Offer");
+        //getActivity().setTitle("Make Me An Offer");
+        //loadOffersFromAWS();
+        dbHelper = new ExampleDBHelper(getContext());
+        db = dbHelper.getWritableDatabase();
+        //Delete the database and create again
+        dbHelper.onUpgrade(db,0,1);
+        //dbHelper.onCreate(db);
 
+        //Create one offer and insert into the database
+        OffersData offer = new OffersData();
+        offer.setMerchantName("BigBasket");
+        offer.setCouponCode("HSBCBB15");
+        offer.setOfferURL("https://www.hsbc.co.in/offers/big-basket/");
+        offer.setPercentDisc("10");
+        offer.setImageURL("bigbasket");
+        dbHelper.insertOffer(offer);
+
+        OffersData offer1 = new OffersData();
+        offer1.setMerchantName("Flipkart");
+        offer1.setCouponCode("HSBCFLIP");
+        offer1.setOfferURL("https://www.hsbc.co.in/offers/flipkart/");
+        offer1.setPercentDisc("20");
+        offer1.setImageURL("flipkart");
+        dbHelper.insertOffer(offer1);
+
+        //Pass data to Home fragment
+        offersList = new ArrayList<OffersData>();
+        offersList.add(offer);
+        offersList.add(offer1);
+        SM.sendData(offersList);
     }
 
     @Override
@@ -57,20 +97,24 @@ public class NotificationsFragment extends Fragment {
         bundle.putInt("test", 10);
         this.setArguments(bundle);
 
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
-        recyclerView = (RecyclerView) view.findViewById(R.id.home_rv);
+        View view = inflater.inflate(R.layout.fragment_notifications, container, false);
+        recyclerView = (RecyclerView) view.findViewById(R.id.notifications_rv);
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
 
         // call the constructor of CustomAdapter to send the reference and data to Adapter
-        CustomAdapter customAdapter = new CustomAdapter(getContext(), getOffersList(offersURL,1));
+        CustomAdapter customAdapter = new CustomAdapter(getContext(), getOffersList());
         recyclerView.setAdapter(customAdapter); // set the Adapter to RecyclerView
 
         //viewModel.setText("Offerlist injected");
 
         return view;
+
+    }
+
+    public void loadOffersFromAWS(){
 
     }
 
@@ -80,22 +124,34 @@ public class NotificationsFragment extends Fragment {
         viewModel = ViewModelProviders
     }*/
 
-    private ArrayList<OffersData> getOffersList(String URL, int type){
+    /**
+     * Method to fetch offers from the database.
+     * @return
+     */
+    private ArrayList<OffersData> getOffersList(){
 
-        ArrayList<OffersData> offersList = new ArrayList<OffersData>();
+        ArrayList<OffersData> offersList = new ArrayList<>();
+        Cursor cursor = dbHelper.getAllOffers();
 
-            offersList.add(new OffersData("Big Basket", "10%", "HSBCMAY","bigbasket","https://www.hsbc.co.in/offers/big-basket/"));
-            offersList.add(new OffersData("Flipkart", "10%", "HSBCFLIP","flipkart","https://www.hsbc.co.in/offers/flipkart/"));
-            //offersList.add(new OffersData("Croma", "15%", "HSBCC","croma","https://www.croma.in"));
-            offersList.add(new OffersData("GoIbibo", "20%", "GOHSBC","goibibo","https://www.hsbc.co.in/credit-cards/offers/goibibo/"));
-            offersList.add(new OffersData("Cleartrip", "15%", "CTHSBCFRIDAY","cleartrip","https://www.hsbc.co.in/credit-cards/offers/cleartrip-friday/"));
-            //offersList.add(new OffersData("ShoppersStop", "10%", "N/A","shoppersstop","https://www.shoppersstop.com"));
-
-            CustomAdapter customAdapter = new CustomAdapter(getContext(), offersList);
-            recyclerView.setAdapter(customAdapter); // set the Adapter to RecyclerView
+        if (cursor.moveToFirst()) {
+            do {
+                OffersData offer = new OffersData();
+                offer.setId(cursor.getString(0));
+                offer.setMerchantName(cursor.getString(1));
+                offer.setPercentDisc(cursor.getString(2));
+                offer.setCouponCode(cursor.getString(3));
+                offer.setOfferURL(cursor.getString(4));
+                offer.setImageURL(cursor.getString(5));
+                // Adding offer to list
+                offersList.add(offer);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
 
         return offersList;
     }
+
+
 
     public class SharedViewModel extends ViewModel {
         //private final MutableLiveData<Item> selected = new MutableLiveData<Item>();

@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -39,10 +38,12 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         String message = home_list.get(position).getMessage();
         String sender = home_list.get(position).getSenderName();
         String date = home_list.get(position).getDate();
+        String savings = home_list.get(position).getSavings();
 
         holder.message.setText(message);
         holder.sender.setText(sender);
         holder.date.setText(date);
+        holder.savings.setText(savings);
         //holder.image.setImageResource(id);
     }
 
@@ -57,12 +58,14 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         private TextView message;
         private TextView sender;
         private TextView date;
+        private TextView savings;
         public ViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
             message = mView.findViewById(R.id.sms_message);
             sender = mView.findViewById(R.id.sms_sender);
             date = mView.findViewById(R.id.sms_date);
+            savings = mView.findViewById(R.id.savings);
         }
     }
 }

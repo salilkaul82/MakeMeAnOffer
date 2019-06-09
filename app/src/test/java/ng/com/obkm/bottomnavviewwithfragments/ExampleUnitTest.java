@@ -1,4 +1,4 @@
-package ng.com.obkm.bottomnavviewwithfragments;
+package ng.salil.obkm.bottomnavviewwithfragments;
 
 import org.junit.Test;
 

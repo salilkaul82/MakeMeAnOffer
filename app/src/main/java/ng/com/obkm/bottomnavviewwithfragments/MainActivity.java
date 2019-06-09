@@ -15,9 +15,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+
+import ng.com.obkm.bottomnavviewwithfragments.NotificationsFragment;
+import ng.com.obkm.bottomnavviewwithfragments.SettingsActivity;
+import ng.com.obkm.bottomnavviewwithfragments.R;
 import ng.com.obkm.bottomnavviewwithfragments.home.HomeFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NotificationsFragment.SendMessage{
 
     final Fragment fragment1 = new HomeFragment();
     final Fragment fragment2 = new NotificationsFragment();
@@ -83,8 +88,12 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(MainActivity.this, SettingsActivity.class));
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void sendData(ArrayList<OffersData> offersList) {
+        HomeFragment homeFragment = (HomeFragment) fragment1;
+        homeFragment.setOffersData(offersList);
+    }
 }

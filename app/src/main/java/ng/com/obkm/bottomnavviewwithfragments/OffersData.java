@@ -2,19 +2,25 @@ package ng.com.obkm.bottomnavviewwithfragments;
 
 public class OffersData {
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    private String id;
     private String merchantName;
     private String percentDisc;
     private String couponCode;
     private String merchantLogo;
     private String offerURL;
+    private String imageURL;
 
-    public OffersData(String merchantName, String percentDisc, String couponCode, String merchantLogo, String offerURL) {
-        this.merchantName = merchantName;
-        this.percentDisc = percentDisc;
-        this.couponCode = couponCode;
-        this.merchantLogo = merchantLogo;
-        this.offerURL = offerURL;
-    }
+    public String getImageURL() { return imageURL; }
+
+    public void setImageURL(String imageURL) { this.imageURL = imageURL; }
 
     public String getMerchantName() {
         return merchantName;

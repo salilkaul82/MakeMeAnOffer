@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+
 public class CustomAdapter extends RecyclerView.Adapter {
 
     ArrayList<OffersData> offersData;
@@ -27,7 +28,7 @@ public class CustomAdapter extends RecyclerView.Adapter {
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // inflate the item Layout
         //** Note that the notifications fragment is bound to recycler view here**//
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_notifications, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.notification_item, parent, false);
         // set the view's size, margins, paddings and layout parameters
         MyViewHolder vh = new MyViewHolder(v); // pass the view to View Holder
         return vh;
@@ -38,7 +39,7 @@ public class CustomAdapter extends RecyclerView.Adapter {
         // set the data in items
         MyViewHolder myViewHolder = (MyViewHolder) holder;
         //myViewHolder.name.setText((offersData.get(position).getMerchantName()));
-        String imageURI = "@drawable/"+offersData.get(position).getMerchantLogo();
+        String imageURI = "@drawable/"+offersData.get(position).getImageURL();
         final int imageResource = context.getResources().getIdentifier(imageURI, null, context.getPackageName());
 
         myViewHolder.image.setImageResource(imageResource);
@@ -74,7 +75,7 @@ public class CustomAdapter extends RecyclerView.Adapter {
             super(itemView);
 
             //get the reference of item view's
-            image = (ImageView) itemView.findViewById(R.id.logo);
+            image = (ImageView) itemView.findViewById(R.id.logo1);
             couponCode = (TextView) itemView.findViewById(R.id.coupon);
             percentDisc = (TextView) itemView.findViewById(R.id.discount);
         }
